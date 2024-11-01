@@ -4,3 +4,8 @@
 
 # environmental variables
 .env
+
+
+
+# build script
+/dist
