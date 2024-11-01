@@ -21,7 +21,7 @@ app.use("/auth", router)
 app.use(userAuth)
 
 
-app.get("/home" ,(req, res)=>{
+app.get("/dashboard" ,(req, res)=>{
 res.send({
     message: "You are at home"
 })
