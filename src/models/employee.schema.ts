@@ -6,6 +6,15 @@ interface Iemployee {
     Resumptiondate: "",
     JobRole: "",
     Address: "",
+    DOB: "",
+    Gender: "",
+    Nationality: "",
+    phoneNo:"",
+    employmentType: "",
+    emergencyContact: ""
+    Relationship: ""
+    emergencyContactPhone: "",
+
 
 }
 
@@ -29,6 +38,38 @@ const employeeSchema = new Schema<Iemployee>({
     Address: {
         type: String,
         required: true
+    },
+    DOB: {
+        required: true,
+        type: String
+    },
+    Gender: {
+        required: true,
+        type: String
+    },
+    Nationality: {
+        required: true,
+        type: String
+    },
+    phoneNo: {
+        required: true,
+        type: String
+    },
+    employmentType: {
+        required: true,
+        type: String
+    },
+    emergencyContact: {
+        required: true,
+        type: String
+    },
+    emergencyContactPhone: {
+        required: true,
+        type: String
+    },
+    Relationship: {
+        required: true,
+        type: String
     }
 },
 

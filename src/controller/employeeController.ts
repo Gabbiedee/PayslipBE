@@ -7,48 +7,66 @@ export const registerEmployee = async (
   res: Response,
   next: NextFunction
 ) => {
-    try {
-        const {fullName, emailAddress, Address, JobRole, Resumptiondate} = req.body
+  try {
+    const {
+      fullName,
+      emailAddress,
+      Address,
+      JobRole,
+      Resumptiondate,
+      DOB,
+      Gender,
+      Nationality,
+      phoneNo,
+      employmentType,
+      emergencyContact,
+      Relationship,
+      emergencyContactPhone,
+    } = req.body;
 
-    if(!fullName || !emailAddress || !Address || !JobRole){
-        throw new AppError(400, "Kindly provide all fields")
+    if (!fullName || !emailAddress || !Address || !JobRole) {
+      throw new AppError(400, "Kindly provide all fields");
     }
 
     const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
-    if(!(emailAddress.match(emailRegex))){
-        throw new AppError(400, "Kindly provide a valid email address")
+    if (!emailAddress.match(emailRegex)) {
+      throw new AppError(400, "Kindly provide a valid email address");
     }
 
     // check if employee already exists
     const findEmployee = await employeeModel.findOne({
-        emailAddress
-    })
+      emailAddress,
+    });
 
-    if(findEmployee){
-        throw new AppError(400, "Employee has already been registered!")
+    if (findEmployee) {
+      throw new AppError(400, "Employee has already been registered!");
     }
 
     const newEmployee = await employeeModel.create({
-        fullName,
-        emailAddress,
-        Address,
-        JobRole,
-        Resumptiondate
-    })
+      fullName,
+      emailAddress,
+      Address,
+      JobRole,
+      Resumptiondate,
+      Gender,
+      Nationality,
+      phoneNo,
+      employmentType,
+      emergencyContact,
+      Relationship,
+      emergencyContactPhone,
+    });
 
-    if(!newEmployee){
-        throw new AppError(400, "Failed to Register employee, try again!")
+    if (!newEmployee) {
+      throw new AppError(400, "Failed to Register employee, try again!");
     }
 
     res.status(201).send({
-        message: "Employee created succesfully",
-        success: true,
-        data: newEmployee._id
-    })
-        
-    } catch (error) {
-        next(error)
-    }
-    
-
+      message: "Employee created succesfully",
+      success: true,
+      data: newEmployee._id,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
