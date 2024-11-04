@@ -16,10 +16,10 @@ app.use(express.json());
 
 
 app.use("/", homeRouter )
-app.use("/employee", employeeRouter)
+app.use("/employee", userAuth, employeeRouter)
 app.use("/auth", router)
 
-app.use(userAuth)
+
 
 
 app.get("/dashboard" ,(req, res)=>{
