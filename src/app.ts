@@ -8,7 +8,12 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors()); // Enable CORS for all routes
+const corsOptions = {
+    origin: 'http://localhost:3000', // or your production frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // allowed methods
+    credentials: true, // allow credentials
+  };
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
