@@ -4,8 +4,12 @@ import router from "./routes/authRoute"
 import userAuth from "./middleware/authmiddleware";
 import employeeRouter from "./routes/employeeRoute";
 import homeRouter from "./routes/homeRoute";
+import cors from 'cors';
 
 const app = express()
+
+app.use(cors());
+app.options('*', cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
