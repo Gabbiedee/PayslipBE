@@ -72,22 +72,23 @@ export  const Register = async (req: Request, res:Response, next:NextFunction )=
 
 export const Login = async (req: Request, res:Response, next:NextFunction )=>{
     
-    const {emailAddress, organisationName, password} = req.body
+    const {emailAddress, password} = req.body
+
+    console.log(req.body)
 
     try {
-        if(!(emailAddress || organisationName )|| !password ){
-            console.log("Enter fields")
-              throw new AppError(400, "Please enter all fields");       
+        if (!emailAddress || !password) {
+            console.log("Enter fields");
+            throw new AppError(400, "Please enter all fields");
         }
 
-        const searchUser = {
-            $or: [
-                { emailAddress: emailAddress },
-                { organisationName: organisationName }
-            ]
-        };
+        
+        const existingUser = await UserModel.findOne({
+            emailAddress: emailAddress
+        }
+        )
 
-        const existingUser = await UserModel.findOne(searchUser)
+        
         console.log(existingUser)
 
         if(!existingUser){
@@ -120,5 +121,10 @@ export const Login = async (req: Request, res:Response, next:NextFunction )=>{
     }
 
 }
+
+
+// export const SignOut = (req: Request, res: Response) => {
+
+// }
 
 
