@@ -9,30 +9,26 @@ import cors from "cors";
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // or your production frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // allowed methods
-    credentials: true, // allow credentials
+    origin: 'http://localhost:3000', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true, 
   };
-app.use(cors(corsOptions)); // Enable CORS for all routes
+app.use(cors(corsOptions)); 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Public route that doesn't require authentication
+
 app.get("/dashboard", (req, res) => {
     res.send({
         message: "You are at home",
     });
 });
 
-// Apply userAuth middleware only to routes that need authentication
+
 app.use("/employee", userAuth, employeeRouter);
 app.use("/auth", router);
 
-// If you have other routes for home, you can include them here
-// For example:
-// app.use("/", homeRouter); // Unprotected routes could be added
 
-// Error handling middleware should be the last middleware
 app.use(errorHandler);
 
 export default app;

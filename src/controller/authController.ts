@@ -50,7 +50,7 @@ export  const Register = async (req: Request, res:Response, next:NextFunction )=
             throw new AppError(400, "Failed to register user, Try again later")
         }
 
-        const token = assignToken({userID: user.id})
+        const token = assignToken({userID: user._id})
 
         res.status(201).send({
             message: "User successfully registered",
@@ -103,7 +103,8 @@ export const Login = async (req: Request, res:Response, next:NextFunction )=>{
 
         console.log(existingUser)
 
-        const token = assignToken({userID: existingUser.id})
+        const token = assignToken({companyId: existingUser.id})
+        console.log(token)
 
         res.status(200).send({
             message: "User successfully logged in",

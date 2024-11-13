@@ -1,4 +1,4 @@
-import mongoose, {Schema } from "mongoose";
+import mongoose, {Schema, Types } from "mongoose";
 
 interface Iemployee {
     fullName: "",
@@ -14,7 +14,7 @@ interface Iemployee {
     emergencyContact: ""
     Relationship: ""
     emergencyContactPhone: "",
-
+    companyId: Types.ObjectId; 
 
 }
 
@@ -70,12 +70,13 @@ const employeeSchema = new Schema<Iemployee>({
     Relationship: {
         required: true,
         type: String
-    }
+    },
+    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 },
 
 {timestamps: true}
 )
 
 
-const employeeModel = mongoose.model("employee", employeeSchema)
+const employeeModel = mongoose.model("Employee", employeeSchema)
 export default employeeModel

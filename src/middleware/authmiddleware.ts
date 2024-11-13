@@ -15,8 +15,10 @@ const userAuth = async (req:Request, res:Response, next:NextFunction) =>{
         const token = header?.split(" ")[1]
         // verifytoken function returns the payload that was signed into the token
         const payload: any = verifyToken(token)
+        console.log(payload.companyId)
         // the payload contains the Userid
-        const user = await UserModel.findOne({_id: payload.userID})
+        const user = await UserModel.findOne({_id: payload.companyId})
+        console.log(user)
         // verify if user exist
         if(!user){
             next(new AppError(401, "User is not authourized"))
