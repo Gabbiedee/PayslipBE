@@ -9,7 +9,7 @@ import cors from "cors";
 const app = express();
 
 const corsOptions = {
-    origin: 'https://payslip-smoky.vercel.app/', 
+    origin: 'https://payslip-smoky.vercel.app', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true, 
   };
