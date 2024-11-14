@@ -103,8 +103,10 @@ try {
   const employees = await employeeModel.find({ fullName });
 
   if (employees.length === 0) {
+    console.log("No employee found with that name")
     throw new AppError(400, "No Employee found with that name")
   }
+ 
   console.log(employees[0])
   res.status(200).send({
     message: "Successful",
