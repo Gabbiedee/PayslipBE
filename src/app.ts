@@ -5,6 +5,7 @@ import userAuth from "./middleware/authmiddleware";
 import employeeRouter from "./routes/employeeRoute";
 import homeRouter from "./routes/homeRoute";
 import cors from "cors";
+import userRouter from "./routes/userRoute";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get("/dashboard", (req, res) => {
 
 
 app.use("/employee", userAuth, employeeRouter);
+app.use("/user", userAuth, userRouter);
 app.use("/auth", router);
 
 

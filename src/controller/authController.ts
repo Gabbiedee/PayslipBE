@@ -124,8 +124,5 @@ export const Login = async (req: Request, res:Response, next:NextFunction )=>{
 }
 
 
-// export const SignOut = (req: Request, res: Response) => {
-
-// }
 
 
