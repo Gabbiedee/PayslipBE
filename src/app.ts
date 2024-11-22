@@ -11,7 +11,7 @@ const app = express();
 
 const corsOptions = {
     origin: ['https://payslip-smoky.vercel.app', "http://localhost:3000" ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], 
     credentials: true, 
   };
 app.use(cors(corsOptions)); 
