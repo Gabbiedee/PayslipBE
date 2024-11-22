@@ -91,7 +91,7 @@ export const registerEmployee = async (
 
 
 
-export const getEmployees = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -123,7 +123,7 @@ export const getEmployees = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
+export const getEmployee = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
