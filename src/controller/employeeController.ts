@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler} from "express";
 import { verifyToken } from "../utils/jwt";
 import { AppError } from "../middleware/errorHandler";
 import employeeModel from "../models/employee.schema";
@@ -13,7 +13,7 @@ export const registerEmployee = async (
     const token = req.headers.authorization?.split(" ")[1];
 
     const decoded = verifyToken(token);
-    console.log(decoded)
+    console.log(decoded);
     const companyId = decoded.companyId;
 
     if (!companyId) {
@@ -90,34 +90,77 @@ export const registerEmployee = async (
 };
 
 
-export const getEmployeeDetails = async (req: Request, res:Response, next:NextFunction)=>{
-const { fullName } = req.query
 
-console.log(fullName)
+export const getEmployees = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
 
-if (!fullName) {
-  return next(new AppError(400, "Full name is required"));
-}
+    if (!token) {
+      throw new AppError(401, "Authorization token is required");
+    }
 
-try {
-  const employees = await employeeModel.find({ fullName });
+    const decoded = verifyToken(token) as { companyId: string };
+    const companyId = decoded.companyId;
 
-  if (employees.length === 0) {
-    console.log("No employee found with that name")
-    throw new AppError(400, "No Employee found with that name")
+    if (!companyId) {
+      throw new AppError(400, "Token is invalid or does not contain companyId");
+    }
+
+    const employees = await employeeModel.find({ companyId });
+
+    if (!employees || employees.length === 0) {
+      throw new AppError(404, "No employee registered with this organization");
+    }
+
+   
+
+    res.status(200).json({
+      message: "Successful",
+      data: employees,
+    });
+  } catch (error) {
+    next(error);
   }
- 
-  console.log(employees[0])
-  res.status(200).send({
-    message: "Successful",
-    data: employees[0]
-  })
+};
 
-  
+export const getAllEmployees = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
 
-}catch (error){
-console.log(error)
-next()
-}
+    if (!token) {
+      throw new AppError(401, "Authorization token is required");
+    }
 
-}
+    const decoded = verifyToken(token) as { companyId: string };
+    const companyId = decoded.companyId;
+
+    if (!companyId) {
+      throw new AppError(400, "Token is invalid or does not contain companyId");
+    }
+
+    const employees = await employeeModel.find({ companyId });
+
+    if (!employees || employees.length === 0) {
+      throw new AppError(404, "No employee registered with this organization");
+    }
+
+    const { fullName } = req.query
+
+    const filteredResult = employees.filter(employee => employee.fullName === fullName)
+
+    console.log(filteredResult)
+
+    if(filteredResult.length === 0){
+      console.log("There is no Employee registered with this name")
+      throw new AppError(400, "There is no Employee registered with this name")
+    }
+
+    res.status(200).send({
+      message: "Done",
+      data: filteredResult
+    })
+   
+  } catch (error) {
+    next(error);
+  }
+};

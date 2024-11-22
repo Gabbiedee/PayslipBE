@@ -7,6 +7,8 @@ interface IUser {
     organisationName: string;
     password: string;
     Cpassword: string;
+    Address: string;
+    companyType: string
   }
 
 const userSchema = new Schema<IUser>({
@@ -21,6 +23,14 @@ const userSchema = new Schema<IUser>({
    password : {
     type: String,
     Required: true
+   },
+   Address: {
+    type: String,
+    Required: false
+   },
+   companyType: {
+    type: String,
+    Required: false
    }
 
 
